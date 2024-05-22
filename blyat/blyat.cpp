@@ -34,14 +34,14 @@ int main()
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_INET;       // Семейство адресов IPv4.
     hints.ai_socktype = SOCK_STREAM; // Тип сокета - потоковый.
-    hints.ai_protocol = IPPROTO_TCP; // Протокол - TCP.
+    hints.ai_protocol = IPPROTO_TCP; // Указываем протокол - TCP.
 
     // Получение адреса сервера.
     result = getaddrinfo("localhost", "666", &hints, &addrResult);
     if (result != 0) {
         cout << "getaddrinfo failed with error: " << result << endl;
         freeaddrinfo(addrResult);   // Освобождение памяти, выделенной для списка адресов.
-        WSACleanup();               // Завершение работы с Winsock.
+        WSACleanup();              
         return 1;
     }
 
@@ -61,7 +61,7 @@ int main()
         closesocket(ConnectSocket); // Закрытие сокета.
         ConnectSocket = INVALID_SOCKET;
         freeaddrinfo(addrResult);   // Освобождение памяти, выделенной для списка адресов.
-        WSACleanup();               // Завершение работы с Winsock.
+        WSACleanup();       
         return 1;
     }
 
@@ -71,7 +71,7 @@ int main()
         cout << "Send failed, error: " << result << endl;
         closesocket(ConnectSocket); // Закрытие сокета.
         freeaddrinfo(addrResult);   // Освобождение памяти, выделенной для списка адресов.
-        WSACleanup();               // Завершение работы с Winsock.
+        WSACleanup();              
         return 1;
     }
     cout << "Sent: " << result << " bytes" << endl;
@@ -82,7 +82,7 @@ int main()
         cout << "Send failed, error: " << result << endl;
         closesocket(ConnectSocket); // Закрытие сокета.
         freeaddrinfo(addrResult);   // Освобождение памяти, выделенной для списка адресов.
-        WSACleanup();               // Завершение работы с Winsock.
+        WSACleanup();               
         return 1;
     }
     cout << "Sent: " << result << " bytes" << endl;
@@ -93,14 +93,14 @@ int main()
         cout << "Shutdown failed, error: " << result << endl;
         closesocket(ConnectSocket); // Закрытие сокета.
         freeaddrinfo(addrResult);   // Освобождение памяти, выделенной для списка адресов.
-        WSACleanup();               // Завершение работы с Winsock.
+        WSACleanup();           
         return 1;
     }
 
     // Получение данных от сервера.
     do {
         ZeroMemory(recvBuffer, 512); // Обнуление буфера приема.
-        result = recv(ConnectSocket, recvBuffer, 512, 0);
+        result = recv(ConnectSocket, recvBuffer, 512, 0); //вызоыв функции, которая принимает данные из сокета
         if (result > 0) {
             cout << "Received " << result << " bytes" << endl;
             cout << "Received data: " << recvBuffer << endl;
